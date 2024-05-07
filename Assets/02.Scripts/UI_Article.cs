@@ -19,7 +19,7 @@ public class UI_Article : MonoBehaviour
     {
         NameTextUI.text = article.Name;
         ContentTextUI.text = article.Content;
-        LikeTextUI.text = $"{article.Like}";
+        LikeTextUI.text = $"좋아요 {article.Like}";
         WriteTimeUI.text = $"{article.WriteTime}";
 
     }

@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
-// 1. 하나만을 보장
+// 1. 하나만을 보장 (싱글톤 사용)
 // 2. 어디서든 쉽게 접근 가능
 public class ArticleManager : MonoBehaviour
 {
@@ -16,10 +17,28 @@ public class ArticleManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-    }
 
-    private void Start()
-    {
+        // 1. FileStream으로 텍스트 저장
+        // 2. 객체 직렬화 -> Binary 저장
+        // 3. PlayerPrefs
+
+        Article article = new Article();
+        article.Name = "이성민";
+        article.Content = "네?";
+        article.Like = 3;
+
+        // 객체를 직렬화 후 파일 형태로 저장
+        string jsonText = JsonUtility.ToJson(article);
+        Debug.Log(jsonText);
+
+        // Json 형태의 텍스트를 객체로 역직렬화 한다.
+        Article loadedArticle = JsonUtility.FromJson<Article>(jsonText);
+        Debug.Log(loadedArticle.Name);
+        Debug.Log(loadedArticle.Content);
+        Debug.Log(loadedArticle.Like);
+
+
+
         _articles.Add(new Article()
         {
             Name = "정수빈",
@@ -28,7 +47,7 @@ public class ArticleManager : MonoBehaviour
             Like = 320,
             WriteTime = DateTime.Now,
         });
-        _articles.Add(new Article() 
+        _articles.Add(new Article()
         {
             Name = "김홍일",
             Content = "안녕하세요.",
@@ -86,6 +105,38 @@ public class ArticleManager : MonoBehaviour
             Like = 20,
             WriteTime = DateTime.Now
         });
+
+        // JSON이란 자바스크립트 객체 표기법으로 요즘 가장 많이 사용하는
+        //         데이터 텍스트 구조
+        // C#의 딕셔너리를 표현하는 방법과 비슷하다.
+        // "키":"밸류" 형태의 데이터를 객체({})와 배열([])의 조합으로 표현한다.
+
+        // 유니티의 특별한 파일 저장 경로
+        // 유니티만이 쓸 수 있는 파일 저장 경로를 가지고 있다.
+        Debug.Log(Application.persistentDataPath);
+        string path = Application.persistentDataPath;
+
+        // 1. 객체를 Json포맷의 텍스르로 변환한 다음 파일 'data.txt'에 저장한다.
+        // json은 일반 클래스는 직렬화할 수 있지만 리스트 그 자체는 직렬화를 못한다.
+        // 일반 클래스로 리스트를 덮어 씌운다.
+        ArticleData articleData = new ArticleData(_articles);
+        string jsonData = JsonUtility.ToJson(articleData);
+        Debug.Log(jsonData);
+        StreamWriter sw = File.CreateText($"{path}/data.txt");
+        sw.Write(jsonData);
+        sw.Close();
+
+        // 2. 데이터를 하드코딩한 코드를 지운다.
+        // 3. 'data.txt'로부터 json을 읽어와서 객체들을 초기화한다.
+        string txt = File.ReadAllText($"{path}/data.txt");
+        _articles = JsonUtility.FromJson<ArticleData>(txt).Data;
+
+
+    }
+
+    private void Start()
+    {
+       
        
     }
 }
