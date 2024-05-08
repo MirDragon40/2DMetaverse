@@ -119,19 +119,17 @@ public class ArticleManager : MonoBehaviour
         // 1. 객체를 Json포맷의 텍스르로 변환한 다음 파일 'data.txt'에 저장한다.
         // json은 일반 클래스는 직렬화할 수 있지만 리스트 그 자체는 직렬화를 못한다.
         // 일반 클래스로 리스트를 덮어 씌운다.
-        ArticleData articleData = new ArticleData(_articles);
+        /*ArticleData articleData = new ArticleData(_articles);
         string jsonData = JsonUtility.ToJson(articleData);
         Debug.Log(jsonData);
         StreamWriter sw = File.CreateText($"{path}/data.txt");
         sw.Write(jsonData);
-        sw.Close();
+        sw.Close();*/
 
         // 2. 데이터를 하드코딩한 코드를 지운다.
         // 3. 'data.txt'로부터 json을 읽어와서 객체들을 초기화한다.
         string txt = File.ReadAllText($"{path}/data.txt");
         _articles = JsonUtility.FromJson<ArticleData>(txt).Data;
-
-
     }
 
     private void Start()
