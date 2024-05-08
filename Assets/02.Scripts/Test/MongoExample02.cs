@@ -61,6 +61,17 @@ public class MongoExample02 : MonoBehaviour
         var whereFilter = Builders<BsonDocument>.
             Filter.Where(d => 1992 <= d["year"] && d["year"] <= 2002);
 
+        // 데이터를 "키"-"값" 형태로 나타내는 것 객체({}), 배열([])
+        // 딕셔너리["키"]
+
+        // 6. 람다식
+        var finalData = movieCollection.Find(d => 1992 <= d["year"] && d["year"] <= 2002).Limit(5).ToList();
+
+        foreach (var d in finalData)
+        {
+            Debug.Log(d["title"]);
+        }
+
 
     }
 }
