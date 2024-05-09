@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 // 1. 하나만을 보장 (싱글톤 사용)
@@ -12,27 +13,26 @@ public class ArticleManager : MonoBehaviour
 {
     private List<Article> _articles = new List<Article>();
 
-    public List<Article> Articles  => _articles;
+    public List<Article> Articles => _articles;
 
     public static ArticleManager Instance { get; private set; }
 
+    // 콜렉션
+    private IMongoCollection<BsonDocument> _articleCollection;
+
+
+
     private void Awake()
     {
-        
-            Instance = this;
-        
-       
 
-        
+        Instance = this;
+        Init();
+        FindAll();
 
     }
 
-    public void OnNotification()
-    {
-        
-    }
-
-    private void Refresh()
+    // 몽고 
+    private void Init()
     {
         // 몽고 DB로부터 article 조회
         // 1. 몽고DB 연결
@@ -41,27 +41,47 @@ public class ArticleManager : MonoBehaviour
         // 2. 특정 데이터베이스 연결
         IMongoDatabase sampleDB = mongoClient.GetDatabase("metaverse");
         // 3. 특정 콜렉션 연결
-        var articlesCollection = sampleDB.GetCollection<BsonDocument>("articles");
+        _articleCollection = sampleDB.GetCollection<BsonDocument>("articles");
+
+    }
+
+    public void FindAll()
+    {
         // 4. 모든 문서 읽어오기
-        int count = (int)articlesCollection.CountDocuments(new BsonDocument());
-        var articlesAll = articlesCollection.Find(new BsonDocument()).Limit(count).ToList();
-
-        
-
-        // 5. 읽어온 문서 만큼 New Articles()해서 데이터 채우고
-        //    _articles에 넣기
-        foreach (var eachArticle in articlesAll)
+        var dataList = _articleCollection.Find(new BsonDocument()).ToList();
+        // 5. 읽어온 문서 만큼 New Article()해서 데이터 채우고 
+        _articles.Clear();
+        foreach (var data in dataList)
         {
             Article article = new Article();
-            article.Name = eachArticle["Name"].ToString();
-            article.Content = eachArticle["Content"].ToString();
-            article.Like = (int)eachArticle["Like"];
-
-            string writeTime = eachArticle["WriteTime"].ToString();
-            article.WriteTime = DateTime.Parse(writeTime);
-
-
+            article.Name = data["Name"].ToString();
+            article.Content = data["Content"].ToString();
+            article.Like = (int)data["Like"];
+            article.ArticleType = (ArticleType)(int)data["ArticleType"];
+            article.WriteTime = DateTime.Parse(data["WriteTime"].ToString());
+            //    _articles에 넣기
             _articles.Add(article);
         }
     }
+
+    public void FindNotice()
+    {
+        // 4. 공지 문서 읽어오기
+        var dataList = _articleCollection.Find(data => data["ArticleType"] == (int)ArticleType.Notice).ToList();
+        // 5. 읽어온 문서 만큼 New Article()해서 데이터 채우고 
+        _articles.Clear();
+        foreach (var data in dataList)
+        {
+            Article article = new Article();
+            article.Name = data["Name"].ToString();
+            article.Content = data["Content"].ToString();
+            article.Like = (int)data["Like"];
+            article.ArticleType = (ArticleType)(int)data["ArticleType"];
+            article.WriteTime = DateTime.Parse(data["WriteTime"].ToString());
+            //    _articles에 넣기
+            _articles.Add(article);
+        }
+    }
+
+   
 }
