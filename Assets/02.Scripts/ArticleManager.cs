@@ -58,6 +58,8 @@ public class ArticleManager : MonoBehaviour
             article.Content = data["Content"].ToString();
             article.Like = (int)data["Like"];
             article.ArticleType = (ArticleType)(int)data["ArticleType"];
+
+
             article.WriteTime = DateTime.Parse(data["WriteTime"].ToString());
             //    _articles에 넣기
             _articles.Add(article);
