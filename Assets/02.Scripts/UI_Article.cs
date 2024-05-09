@@ -15,6 +15,7 @@ public class UI_Article : MonoBehaviour
     public TextMeshProUGUI WriteTimeUI;       // 글 쓴 날짜/시간
 
 
+
     public void Init(Article article)
     {
         NameTextUI.text = article.Name;

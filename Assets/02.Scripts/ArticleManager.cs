@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UI;
 
 // 1. 하나만을 보장 (싱글톤 사용)
 // 2. 어디서든 쉽게 접근 가능
@@ -20,7 +21,7 @@ public class ArticleManager : MonoBehaviour
     // 콜렉션
     private IMongoCollection<Article> _articleCollection;
 
-
+    public UI_ArticleWrite Ui_ArticleWrite;
 
     private void Awake()
     {
@@ -95,5 +96,4 @@ public class ArticleManager : MonoBehaviour
         */
     }
 
-   
 }
