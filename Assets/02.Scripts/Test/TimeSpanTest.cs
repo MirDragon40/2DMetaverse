@@ -36,7 +36,7 @@ public class TimeSpanTest : MonoBehaviour
         // 2024/5/9 11:36:05
         // ISO 시간표기법
         string intNumber = "324";
-        int number = Int32.Parse(intNumber);
+        int number = Int32.Parse(intNumber);   // 문자열 => 정수
 
         string stringDate = "2024-05-07T14:32:17";
         DateTime date = DateTime.Parse(stringDate);

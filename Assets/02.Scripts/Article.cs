@@ -1,3 +1,5 @@
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +24,8 @@ public enum ArticleType
 [Serializable]
 public class Article // Quest, Item, Achievement, Attendance 
 {
+    [BsonId]
+    public ObjectId MyID;           // 유일한 주민번호: Id, _id, Id (시간 + 기기ID + 프로세스ID + count)
     public ArticleType ArticleType; // 일반글? 공지사항글이냐?
     public string Name;             // 글쓴이
     public string Content;          // 글 내용
