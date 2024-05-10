@@ -970,7 +970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30ea140fd73a4b84bae4d78659e2dfa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ui_ArticleWrite: {fileID: 0}
+  Ui_ArticleList: {fileID: 1788662030}
 --- !u!4 &378331640
 Transform:
   m_ObjectHideFlags: 0
@@ -1352,7 +1352,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ArticleWrite_UI: {fileID: 550110293}
-  IsOnWritePage: 0
   MyInputField: {fileID: 0}
   CheckNoticeToggle: {fileID: 796278848}
 --- !u!1 &555365827

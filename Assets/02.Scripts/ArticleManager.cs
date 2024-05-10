@@ -21,7 +21,7 @@ public class ArticleManager : MonoBehaviour
     // 콜렉션
     private IMongoCollection<Article> _articleCollection;
 
-    public UI_ArticleWrite Ui_ArticleWrite;
+    public UI_ArticleList Ui_ArticleList;
 
     private void Awake()
     {
