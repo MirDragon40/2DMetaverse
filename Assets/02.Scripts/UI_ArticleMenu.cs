@@ -20,6 +20,7 @@ public class UI_ArticleMenu : MonoBehaviour
     public void OnClickBackground()
     {
         gameObject.SetActive(false);
+
     }
 
 
@@ -28,11 +29,12 @@ public class UI_ArticleMenu : MonoBehaviour
     {
         Debug.Log("삭제하기 버튼");
         ArticleManager.Instance.Delete(_article.MyID);
-        
         ArticleManager.Instance.FindAll();
 
         gameObject.SetActive(false);
 
         UI_ArticleList.Instance.Refresh();
     }
+
+
 }

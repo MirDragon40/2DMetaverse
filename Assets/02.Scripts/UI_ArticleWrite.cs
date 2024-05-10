@@ -26,6 +26,8 @@ public class UI_ArticleWrite : MonoBehaviour
         ArticleManager.Instance.Write(articleType, content);
         ArticleListUI.Show();
         gameObject.SetActive(false);
+
+
     }
 
 
