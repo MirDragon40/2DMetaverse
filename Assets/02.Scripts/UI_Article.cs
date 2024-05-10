@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.ParticleSystem;
 
 // Article 데이터를 보여주는 게임 오브젝트
 public class UI_Article : MonoBehaviour
@@ -14,7 +16,9 @@ public class UI_Article : MonoBehaviour
     public TextMeshProUGUI LikeTextUI;        // 좋아요 개수
     public TextMeshProUGUI WriteTimeUI;       // 글 쓴 날짜/시간
 
+    public UI_ArticleMenu MenuUI;
 
+    private Article _article;
 
     public void Init(Article article)
     {
@@ -50,7 +54,10 @@ public class UI_Article : MonoBehaviour
         }
         
             return dateTime.ToString("yyyy년M월d일");
+    }
 
-        
+    public void OnClickMenuButton()
+    {
+        MenuUI.Show(_article);
     }
 }

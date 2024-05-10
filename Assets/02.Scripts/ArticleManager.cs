@@ -10,16 +10,19 @@ using UnityEngine.UI;
 
 // 1. 하나만을 보장 (싱글톤 사용)
 // 2. 어디서든 쉽게 접근 가능
+// 3. 데이터 관리
 public class ArticleManager : MonoBehaviour
 {
+
+    // 게시글 리스트
     private List<Article> _articles = new List<Article>();
-
     public List<Article> Articles => _articles;
-
-    public static ArticleManager Instance { get; private set; }
 
     // 콜렉션
     private IMongoCollection<Article> _articleCollection;
+
+    public static ArticleManager Instance { get; private set; }
+
 
     public UI_ArticleList Ui_ArticleList;
 
@@ -108,6 +111,13 @@ public class ArticleManager : MonoBehaviour
         };
 
         _articleCollection.InsertOne(article);
+    }
+
+    public void Delete(ObjectId id)
+    {
+        //var filter = Builders<Article>.Filter.Eq("_id", id);
+        //_articleCollection.DeleteOne(filter);
+        _articleCollection.DeleteOne(d => d.MyID == id);
     }
 
 }
