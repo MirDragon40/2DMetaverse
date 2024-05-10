@@ -96,4 +96,18 @@ public class ArticleManager : MonoBehaviour
         */
     }
 
+    public void Write(ArticleType articleType, string content)
+    {
+        Article article = new Article()
+        {
+            ArticleType = articleType,
+            Name = "정수빈",
+            Content = content,
+            Like = 999,
+            WriteTime = DateTime.Now
+        };
+
+        _articleCollection.InsertOne(article);
+    }
+
 }

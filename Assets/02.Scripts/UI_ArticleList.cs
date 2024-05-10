@@ -11,8 +11,16 @@ public class UI_ArticleList : MonoBehaviour
 
     public GameObject Bar_image;
 
+    public UI_ArticleWrite ArticleWriteUI;
+
     private void Start()
     {
+        Refresh();
+    }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
         Refresh();
     }
 
@@ -40,6 +48,7 @@ public class UI_ArticleList : MonoBehaviour
 
     }
 
+
     // 전체보기 버튼을 클릭했을 때 호출되는 함수
     public void OnClickAllButton()
     {
@@ -54,6 +63,11 @@ public class UI_ArticleList : MonoBehaviour
         Refresh();
     }
 
+    public void OnClickWriteButton()
+    {
+        gameObject.SetActive(false);
+        ArticleWriteUI.gameObject.SetActive(true);
+    }
 
 
 }

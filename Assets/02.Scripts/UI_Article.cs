@@ -21,7 +21,7 @@ public class UI_Article : MonoBehaviour
         NameTextUI.text = article.Name;
         ContentTextUI.text = article.Content;
         LikeTextUI.text = $"좋아요 {article.Like}";
-        WriteTimeUI.text = GetTimeString(article.WriteTime);
+        WriteTimeUI.text = GetTimeString(article.WriteTime.ToLocalTime());
     }
 
     private string GetTimeString (DateTime dateTime)
