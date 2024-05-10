@@ -32,8 +32,34 @@ public class MongoExample03 : MonoBehaviour
 
         // 2. 도큐먼트 여러개 삽입
         // InsertMany(List<도큐먼트>)
-
-
+        List<Article> articles = new List<Article>()
+        {
+           new Article()
+            {
+                Name = "티모",
+                Content =  "민성씨 빨리와요.",
+                ArticleType =  ArticleType.Normal,
+                Like = 11,
+                WriteTime = new DateTime(2023, 12, 24)
+            },
+            new Article()
+            {
+                Name = "말파이트",
+                Content =  "성민씨 휴가 왜 쓰셨나요.",
+                ArticleType =  ArticleType.Normal,
+                Like = 130,
+                WriteTime =  DateTime.Now
+            }
+            ,new Article()
+            {
+                Name = "애쉬",
+                Content =  "경희씨 아프지마세요.",
+                ArticleType =  ArticleType.Normal,
+                Like = 19700,
+                WriteTime =  DateTime.Now.AddHours(-3)
+            }
+        };
+        collection.InsertMany(articles);
 
     }
 }
