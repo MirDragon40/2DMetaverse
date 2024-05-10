@@ -18,7 +18,7 @@ public class UI_ArticleModify : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void Show(Article article)
+    public void Show(in Article article)
     {
         _article = article;
 
@@ -39,14 +39,14 @@ public class UI_ArticleModify : MonoBehaviour
         _article.ArticleType = NoticeToggleUI.isOn ? ArticleType.Notice : ArticleType.Normal;
         _article.Content = ContentInputFieldUI.text;
         string content = ContentInputFieldUI.text;
+
         if (string.IsNullOrEmpty(content))
         {
             return;
         }
 
         ArticleManager.Instance.Replace(_article);
-        UI_ArticleList.Instance.Show();
-        UI_ArticleList.Instance.Refresh();
+
         gameObject.SetActive(false);
 
 

@@ -8,13 +8,15 @@ public class UI_ArticleMenu : MonoBehaviour
     public void Show(Article article)
     {
         _article = article;
-
         gameObject.SetActive(true);
     }
 
     public void OnClickModifyButton()
     {
         Debug.Log("수정하기 버튼");
+        Debug.Log(_article);
+        UI_ArticleModify.Instance.Show(_article);
+        gameObject.SetActive(false);
     }
 
     public void OnClickBackground()
@@ -28,6 +30,8 @@ public class UI_ArticleMenu : MonoBehaviour
     public void OnClickDeleteButton()
     {
         Debug.Log("삭제하기 버튼");
+        Debug.Log(_article.Name);
+        Debug.Log(_article.MyID);
         ArticleManager.Instance.Delete(_article.MyID);
         ArticleManager.Instance.FindAll();
 

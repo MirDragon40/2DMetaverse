@@ -76,18 +76,29 @@ public class ArticleManager : MonoBehaviour
     public void Delete(ObjectId id)
     {
 
-        if( == null)
-        {
-            return;
-        }
+    
         //var filter = Builders<Article>.Filter.Eq("_id", id);
         //_articleCollection.DeleteOne(filter);
         _articleCollection.DeleteOne(d => d.MyID == id);
     }
 
 
+    public void Replace(Article article)
+    {
+        _articleCollection.ReplaceOne(d => d.MyID == article.MyID, article);
+    }
 
 
+    public void AddLike(Article article)
+    {
+        // 1. 필터
+        var filter = Builders<Article>.Filter.Eq("_id", article.MyID);
+        // 2. 업데이트 정의
+        //var updateDef = Builders<Article>.Update.Set("Like", article.Like + 1);
+        var updateDef = Builders<Article>.Update.Inc("Like", 1);
+        // 3. 업데이트 
+        _articleCollection.UpdateOne(filter, updateDef);
+    }
 
 
 

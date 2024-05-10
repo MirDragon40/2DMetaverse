@@ -13,6 +13,8 @@ public class UI_ArticleList : MonoBehaviour
     public GameObject Bar_image;
     public UI_ArticleWrite ArticleWriteUI;
 
+    public Animator BarAnimator;
+
     private void Awake()
     {
         Instance = this;
@@ -57,6 +59,7 @@ public class UI_ArticleList : MonoBehaviour
     // 전체보기 버튼을 클릭했을 때 호출되는 함수
     public void OnClickAllButton()
     {
+        BarAnimator.SetTrigger("AllClicked");
         ArticleManager.Instance.FindAll();
         Refresh();
     }
@@ -64,6 +67,7 @@ public class UI_ArticleList : MonoBehaviour
     // 공지 버튼을 클릭했을 때 호출되는 함수
     public void OnClickNoticeButton()
     {
+        BarAnimator.SetTrigger("NoticeClicked");
         ArticleManager.Instance.FindNotice();
         Refresh();
     }

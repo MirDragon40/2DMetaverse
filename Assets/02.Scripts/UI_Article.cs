@@ -22,6 +22,7 @@ public class UI_Article : MonoBehaviour
 
     public void Init(Article article)
     {
+        _article = article;
         NameTextUI.text = article.Name;
         ContentTextUI.text = article.Content;
         LikeTextUI.text = $"좋아요 {article.Like}";
@@ -59,5 +60,12 @@ public class UI_Article : MonoBehaviour
     public void OnClickMenuButton()
     {
         MenuUI.Show(_article);
+    }
+
+
+    public void OnClickLikeButton()
+    {
+        // 1. 데이터 조작은 항상 매니저에게 시킨다.
+
     }
 }

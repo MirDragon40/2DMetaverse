@@ -8,6 +8,11 @@ public class UI_ArticleWrite : MonoBehaviour
     public Toggle NoticeToggleUI;
     public TMP_InputField ContentInputFieldUI;
 
+    private void Awake()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void OnClickExitButton()
     {
         ArticleListUI.gameObject.SetActive(true);
