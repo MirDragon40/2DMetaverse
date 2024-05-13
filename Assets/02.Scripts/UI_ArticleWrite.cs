@@ -23,6 +23,7 @@ public class UI_ArticleWrite : MonoBehaviour
     {
         ArticleType articleType = NoticeToggleUI.isOn ? ArticleType.Notice : ArticleType.Normal;
         string content = ContentInputFieldUI.text;
+       
         if (string.IsNullOrEmpty(content))
         {
             return;

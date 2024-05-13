@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using static UnityEngine.ParticleSystem;
 
 // Article 데이터를 보여주는 게임 오브젝트
 public class UI_Article : MonoBehaviour
 {
-    public Image ProfilePictureUI;            // 프로필 이미지
+    public RawImage ProfilePictureUI;            // 프로필 이미지
+    public string ProfileLink;
     public TextMeshProUGUI NameTextUI;        // 글쓴이
     public TextMeshProUGUI ContentTextUI;     // 글 내용
     public TextMeshProUGUI LikeTextUI;        // 좋아요 개수
@@ -27,6 +29,17 @@ public class UI_Article : MonoBehaviour
         ContentTextUI.text = article.Content;
         LikeTextUI.text = $"좋아요 {article.Like}";
         WriteTimeUI.text = GetTimeString(article.WriteTime.ToLocalTime());
+        ProfileLink = article.Profile;
+
+        if (ProfileLink == null)
+        {
+            StartCoroutine(GetTexture("http://192.168.200.104:3059/Profile.png"));
+        }
+        else
+        {
+            StartCoroutine(GetTexture(ProfileLink));
+
+        }
     }
 
     private string GetTimeString (DateTime dateTime)
@@ -60,6 +73,7 @@ public class UI_Article : MonoBehaviour
     public void OnClickMenuButton()
     {
         MenuUI.Show(_article);
+       
     }
 
 
@@ -70,5 +84,23 @@ public class UI_Article : MonoBehaviour
 
         ArticleManager.Instance.FindAll();
         UI_ArticleList.Instance.Refresh();
+    }
+
+    IEnumerator GetTexture(string profileLink)
+    {
+        // Http 주문을 위해 주문서(Request)를 만든다.
+        // -> 주문서 내용: URL로부터 텍스처(이미지)를 다운로드하기 위한 GET Request 요청
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture(profileLink);
+        yield return www.SendWebRequest();  // 비동기가 일어나는 구간
+
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Texture myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            ProfilePictureUI.texture = myTexture;
+        }
     }
 }

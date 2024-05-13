@@ -6,6 +6,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.Profiling;
 
 // 1. 하나만을 보장
 // 2. 어디서든 쉽게 접근 가능
@@ -17,6 +19,8 @@ public class ArticleManager : MonoBehaviour
 
     // 콜렉션
     private IMongoCollection<Article> _articleCollection;
+
+    public UI_Article Ui_Article;
 
     public static ArticleManager Instance { get; private set; }
     private void Awake()
@@ -66,12 +70,13 @@ public class ArticleManager : MonoBehaviour
             Name = "정수빈",
             Content = content,
             Like = 0,
-            WriteTime = DateTime.Now
+        WriteTime = DateTime.Now
         };
 
         _articleCollection.InsertOne(article);
     }
-
+    
+ 
 
     public void Delete(ObjectId id)
     {
@@ -101,6 +106,22 @@ public class ArticleManager : MonoBehaviour
     }
 
 
+    IEnumerator GetTexture(string profileURL)
+    {
+        // Http 주문을 위해 주문서(Request)를 만든다.
+        // -> 주문서 내용: URL로부터 텍스처(이미지)를 다운로드하기 위한 GET Request 요청
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture(profileURL);
+        yield return www.SendWebRequest();  // 비동기가 일어나는 구간
 
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Texture myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            Ui_Article.ProfilePictureUI.texture = myTexture;
+        }
+    }
 
 }
