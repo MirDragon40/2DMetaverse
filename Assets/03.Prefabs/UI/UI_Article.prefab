@@ -899,7 +899,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: c4fd4243d09907744823ee4ef276e506, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -2467,6 +2467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ProfilePictureUI: {fileID: 8582561947357801157}
+  ProfileLink: 
   NameTextUI: {fileID: 468294631846314951}
   ContentTextUI: {fileID: 3420419779385326978}
   LikeTextUI: {fileID: 7458670346531656340}

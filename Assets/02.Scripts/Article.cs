@@ -22,6 +22,7 @@ public enum ArticleType
 
 
 [Serializable]
+[BsonIgnoreExtraElements]
 public class Article // Quest, Item, Achievement, Attendance 
 {
     [BsonId]
@@ -32,8 +33,8 @@ public class Article // Quest, Item, Achievement, Attendance
     public string Content;          // 글 내용
     public int Like;                // 좋아요 개수
     public DateTime WriteTime;      // 글 쓴 날짜/시간
-    [BsonElement("Profile")]
-    public string Profile;          // 프로필 사진
+    [BsonDefaultValue("http://192.168.200.104:3059/Profile.png")]   // null검사 말고 다른 방식
+    public string Profile;          // 프로필 이미지 주소
 }
 
 [Serializable]

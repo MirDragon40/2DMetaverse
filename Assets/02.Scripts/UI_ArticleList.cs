@@ -48,9 +48,10 @@ public class UI_ArticleList : MonoBehaviour
         for (int i = 0; i < articles.Count; i++)
         {
             // 3. 가져온 Article 개수만큼 UI_Article을 쓴다.
-            UI_Articles[i].Init(articles[i]);
-            // 4. 각 UI_Article의 내용을 Article로 초기화(Init) 한다.
             UI_Articles[i].gameObject.SetActive(true);
+
+            // 4. 각 UI_Article의 내용을 Article로 초기화(Init) 한다.
+            UI_Articles[i].Init(articles[i]);
         }
 
     }
